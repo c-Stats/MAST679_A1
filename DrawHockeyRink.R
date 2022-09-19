@@ -1,7 +1,7 @@
-requires("data.table")
-requires("magrittr")
-requires("dplyr")
-requires("ggplot2")
+require("data.table")
+require("magrittr")
+require("dplyr")
+require("ggplot2")
 
 xy_circle <- function(r, centre = c(0, 0), from = 0, to = 2*pi, colour = "red", npoints = 200){
 
@@ -131,7 +131,11 @@ xy_rectangle_ellipse_corner <- function(side_lengths, p_side, centre = c(0, 0), 
 
 	rectangle <- xy_rectangle(side_lengths, centre, colour, npoints = 200)
 
-	limits <- lapply(as.list(c(1:2)), function(i){centre[i] + c(-1, 1) * side_lengths[i]/2 * p_side})	
+	length_cut <- (1 - p_side) * side_lengths[2]
+	p_side <- c(1 - length_cut/side_lengths[1], p_side)
+
+
+	limits <- lapply(as.list(c(1:2)), function(i){centre[i] + c(-1, 1) * side_lengths[i]/2 * p_side[i]})	
 	names(limits) <- c("x", "y")
 
 	out_of_bounds <- list()
@@ -186,7 +190,7 @@ xy_rectangle_ellipse_corner <- function(side_lengths, p_side, centre = c(0, 0), 
 draw_hockey_rink <- function(filename = "hockey_rink"){
 
 	#Outer section
-	border_xy <- xy_rectangle_ellipse_corner(side_lengths = c(60, 30), p_side = 0.65, colour = "black")
+	border_xy <- xy_rectangle_ellipse_corner(side_lengths = c(60, 30), p_side = 0.58, colour = "black")
 
     #blue lines
     blue_lines <- xy_rectangle(side_lengths = c(18, 30), colour = "blue")
