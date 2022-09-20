@@ -281,6 +281,10 @@ draw_hockey_rink <- function(filename = "hockey_rink"){
 			geom_path(data = xy_circle(r = 2, centre = c(26, 0), from = pi/2, to = 3*pi/2), color = "blue")
 
 
+	#remove axis labels
+	rink <- rink + xlab("") + ylab("")
+
+
 	ggsave(file = paste(filename, ".png", sep = ""))
 	print(paste("File saved at: ", getwd(), "/", filename, sep = ""))
 	print(rink)
